@@ -3,14 +3,23 @@
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // === Navbar Scroll Effect ===
+  // === Navbar Scroll Effect & Floating WhatsApp ===
   const navbar = document.getElementById('navbar');
+  const whatsappFloat = document.getElementById('whatsappFloat');
   
   const handleScroll = () => {
     if (window.scrollY > 50) {
       navbar.classList.add('scrolled');
     } else {
       navbar.classList.remove('scrolled');
+    }
+    
+    if (whatsappFloat) {
+      if (window.scrollY > 350) {
+        whatsappFloat.classList.add('visible');
+      } else {
+        whatsappFloat.classList.remove('visible');
+      }
     }
   };
   

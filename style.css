@@ -253,6 +253,7 @@ button {
 
 /* === Header / Navbar === */
 .navbar {
+  display: none; /* Hide the navbar menu/links as requested */
   position: absolute;
   top: 0;
   left: 0;
@@ -282,10 +283,18 @@ button {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.navbar.scrolled .nav-logo {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .nav-logo img {
-  height: 42px;
+  height: 38px;
   width: auto;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
@@ -384,11 +393,11 @@ button {
 .hero {
   min-height: 100vh;
   display: flex;
-  align-items: center;
+  align-items: flex-start; /* Prevent top-clipping on short viewports */
   justify-content: center;
   position: relative;
   overflow: hidden;
-  padding-top: var(--nav-height);
+  padding-top: 60px; /* Comfortable spacing from the top of the browser */
 }
 
 .hero::before {
@@ -453,14 +462,27 @@ button {
   max-width: 800px;
   padding: var(--space-xl);
   animation: fadeIn 1s ease-out;
+  margin-top: 0; /* Reset margin to prevent top overflow */
 }
 
 .hero-logo {
-  width: 160px;
+  width: 100%;
+  max-width: 155px; /* Adjusted size for cropped logo */
   height: auto;
-  margin: 0 auto var(--space-xl);
+  margin: 0 auto var(--space-lg); /* Proper margins for cropped logo */
   filter: drop-shadow(0 4px 20px rgba(200, 163, 95, 0.3));
-  animation: fadeInUp 0.8s ease-out;
+  animation: zoomFadeInUp 1s ease-out both;
+}
+
+@keyframes zoomFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .hero-title {
@@ -468,14 +490,14 @@ button {
   font-size: clamp(2.2rem, 5vw, 3.8rem);
   font-weight: 700;
   line-height: 1.15;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-xs); /* Reduced from var(--space-lg) */
   animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
 .hero-subtitle {
   font-size: clamp(1rem, 2vw, 1.2rem);
   color: var(--text-secondary);
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-md); /* Reduced from var(--space-2xl) */
   max-width: 550px;
   margin-left: auto;
   margin-right: auto;
@@ -488,7 +510,7 @@ button {
   flex-wrap: wrap;
   justify-content: center;
   gap: var(--space-md);
-  margin-bottom: var(--space-2xl);
+  margin-bottom: var(--space-lg); /* Reduced from var(--space-2xl) */
   animation: fadeInUp 0.8s ease-out 0.5s both;
 }
 
@@ -1384,8 +1406,8 @@ button {
 }
 
 .footer-brand img {
-  height: 50px;
-  margin-bottom: var(--space-md);
+  height: 48px;
+  margin-bottom: var(--space-lg);
 }
 
 .footer-brand p {
@@ -1488,6 +1510,16 @@ button {
   display: flex;
   align-items: center;
   gap: var(--space-sm);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: opacity var(--transition-base), transform var(--transition-base);
+}
+
+.whatsapp-float.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .whatsapp-float-btn {
@@ -1630,23 +1662,36 @@ button {
   .nav-links a {
     font-size: 1.1rem;
   }
+
   
-  .menu-toggle {
-    display: flex;
+  .hero {
+    padding-top: 40px; /* Balance padding for mobile viewports */
+  }
+
+  .hero-content {
+    margin-top: 0; /* Reset margin on mobile as well */
+    padding: var(--space-md); /* Reduced padding to fit mobile viewports */
   }
   
   .hero-title {
     font-size: clamp(1.8rem, 6vw, 2.8rem);
   }
   
+  .hero-subtitle {
+    margin-bottom: var(--space-sm); /* Closer to the badges */
+  }
+  
   .hero-badges {
     flex-direction: column;
     align-items: center;
+    gap: var(--space-sm); /* Reduced gap */
+    margin-bottom: var(--space-md); /* Closer to the buttons */
   }
   
   .hero-buttons {
     flex-direction: column;
     align-items: center;
+    gap: var(--space-sm); /* Reduced gap */
   }
   
   .hero-buttons .btn {
@@ -1712,7 +1757,8 @@ button {
   }
   
   .hero-logo {
-    width: 120px;
+    max-width: 120px;
+    margin-bottom: var(--space-md);
   }
   
   .counter-row {
@@ -2172,9 +2218,8 @@ button {
 }
 
 .tabela-logo {
-  height: 54px;
+  height: 48px;
   width: auto;
-  filter: none; /* Keep the premium gold colors */
 }
 
 .tabela-title {
